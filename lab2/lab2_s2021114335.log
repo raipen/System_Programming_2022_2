@@ -1,0 +1,21 @@
+    1  mkdir lab1
+    2  cd lab1/
+    3  vim helloworld.c
+    4  gcc helloworld.c -o helloworld
+    5  ./helloworld
+    6  ls -al
+    7  cd ..
+    8  mv lab1 lab1_s2021114335
+    9  zip -r lab1_s2021114335.zip lab1_s2021114335
+   10  sudo apt-get install zip
+   11  zip -r lab1_s2021114335.zip lab1_s2021114335
+   12  mkdir lab2
+   13  cd lab2
+   14  vim sum.c
+   15  gcc sum.c
+   16  ./a.out
+   17  vim sum.c
+   18  gcc sum.c
+   19  ./a.out
+   20  mv sum.c sum_s2021114335.c
+   21  history > lab2_s2021114335.log
