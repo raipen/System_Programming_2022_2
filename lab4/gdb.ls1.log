@@ -1,0 +1,25 @@
+Starting program: /home/raipen/systemPrograming/lab4/ls1 
+[Inferior 1 (process 21622) exited normally]
+Breakpoint 1 at 0x5555555552bf: file ls1.c, line 37.
+Breakpoint 2 at 0x555555555250: file ls1.c, line 28.
+Starting program: /home/raipen/systemPrograming/lab4/ls1 
+
+Breakpoint 2, do_ls (
+    dirname=0x55555555531d <__libc_csu_init+77> "H\203\303\001H9\335u\352H\203\304\b[]A\\A]A^A_\303ff.\017\037\204") at ls1.c:28
+28	{
+$1 = 0x55555555531d <__libc_csu_init+77> "H\203\303\001H9\335u\352H\203\304\b[]A\\A]A^A_\303ff.\017\037\204"
+$2 = 72 'H'
+$3 = -125 '\203'
+$4 = -61 '\303'
+32	    if ((dir_ptr = opendir(dirname)) == NULL)
+__opendir (name=0x555555556004 ".") at ../sysdeps/posix/opendir.c:88
+88	../sysdeps/posix/opendir.c: No such file or directory.
+89	in ../sysdeps/posix/opendir.c
+Continuing.
+
+Breakpoint 1, do_ls (dirname=0x555555556004 ".") at ls1.c:37
+37	        closedir(dir_ptr);
+$5 = (struct dirent *) 0x0
+Continuing.
+[Inferior 1 (process 21719) exited normally]
+The program is not being run.
