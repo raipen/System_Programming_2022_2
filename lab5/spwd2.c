@@ -21,7 +21,8 @@ int main()
     struct stat info;
     if (stat(".", &info) == -1) /* cannot stat */
         perror(".");
-    printpathto(get_inode("."),getpwuid(info.st_uid)->pw_name);
+    printpathto(get_inode("."),getpwuid(info.st_uid)->pw_dir);
+    putchar('\n');
     return 0;
 }
 
