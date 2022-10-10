@@ -10,7 +10,8 @@
 #include <stdlib.h>
 
 typedef struct node{
-    struct dirent *direntp;
+    unsigned char d_type;
+    char d_name[256];
     struct node *next;
 }direntNode;
 
@@ -33,23 +34,19 @@ void do_ls(char dirname[]){
     direntNode *head=scanAndSortDir(dirname);
 
     for(direntNode* cur = head; cur; cur = cur->next)
-        printf("%s\t", cur->direntp->d_name);
+        printf("%s\t", cur->d_name);
     printf("\n");
 
     //디렉토리 내 파일들을 순회하며 디렉토리면 재귀호출
-    for(direntNode* cur = head; cur; cur = cur->next){
-        if(cur->direntp->d_type==DT_DIR){
-            if(strcmp(cur->direntp->d_name,".")==0||strcmp(cur->direntp->d_name,"..")==0){
-                continue;
-            }
+    for(direntNode* cur = head; cur; cur = cur->next)
+        if(cur->d_type==DT_DIR){
             char* newDirName=(char*)malloc(sizeof(char)*100);
             strcpy(newDirName,dirname);
             strcat(newDirName,"/");
-            strcat(newDirName,cur->direntp->d_name);
+            strcat(newDirName,cur->d_name);
             printf("%s:\n",newDirName);
             do_ls(newDirName);
         }
-    }
 
     // 연결리스트 메모리 해제
     direntNode* cur = head;
@@ -81,7 +78,8 @@ direntNode* scanAndSortDir(char* dirname){
 
 void insertNode(direntNode** head, struct dirent* newDirentp){
     direntNode* newNode=(direntNode*)malloc(sizeof(direntNode));
-    newNode->direntp=newDirentp;
+    strcpy(newNode->d_name,newDirentp->d_name);
+    newNode->d_type=newDirentp->d_type;
     newNode->next=NULL;
 
     if(*head==NULL){
@@ -92,7 +90,7 @@ void insertNode(direntNode** head, struct dirent* newDirentp){
     direntNode* cur=*head;
     direntNode* prev=NULL;
     while(cur){
-        if(strcmp(cur->direntp->d_name,newDirentp->d_name)>0){
+        if(strcmp(cur->d_name,newDirentp->d_name)>0){
             if(prev==NULL){
                 newNode->next=cur;
                 *head=newNode;
