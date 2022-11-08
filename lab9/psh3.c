@@ -20,7 +20,7 @@ char *makestring(char *buf);
 
 void sigint_handler(int sig)
 {
-    
+    //do nothing
 }
 
 int main()
