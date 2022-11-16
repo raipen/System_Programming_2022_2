@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "utmp.h": "c",
-        "sigevent_t.h": "c"
+        "sigevent_t.h": "c",
+        "smsh.h": "c"
     }
 }
