@@ -59,11 +59,11 @@ int main(int argc, char *argv[])
     if(unit=='M'||unit=='G')
         printf("%10ld\t%9ld%c\t%9ld%c\t%10ld%%\n",
                 buf.f_blocks * buf.f_bsize / unitSize, (buf.f_blocks - buf.f_bfree) * buf.f_bsize / unitSize, unit,
-                buf.f_bavail * buf.f_bsize / unitSize, unit, (buf.f_blocks - buf.f_bfree) * 100 / buf.f_blocks);
+                buf.f_bavail * buf.f_bsize / unitSize, unit, 100 - buf.f_bfree * 100 / buf.f_blocks);
     else
         printf("%10ld\t%10ld\t%10ld\t%10ld%%\n",
                 buf.f_blocks*buf.f_bsize/unitSize, (buf.f_blocks - buf.f_bfree)*buf.f_bsize/unitSize,
-                buf.f_bavail*buf.f_bsize/unitSize, (buf.f_blocks - buf.f_bfree)*100/buf.f_blocks);
+                buf.f_bavail*buf.f_bsize/unitSize, 100 - buf.f_bfree*100/buf.f_blocks);
 
     return 0;
 }
