@@ -34,7 +34,6 @@ int main(int ac, char *av[])
     FILE *sock_fpi, *sock_fpo; /* streams for in and out */
     FILE *pipe_fp; /* use popen to read from ls */
     char dirname[BUFSIZ]; /* from client */
-    char command[BUFSIZ]; /* to hold 'ls' command */
     int dirlen, c;
 
     /* Step 1: ask kernel for a socket */
@@ -72,14 +71,25 @@ int main(int ac, char *av[])
 
         if((sock_fpo = fdopen(sock_fd, "w")) == NULL)
             oops("fdopen writing");
-
-        sprintf(command, "ls %s", dirname);
-        if((pipe_fp = popen(command, "r")) == NULL)
-            oops("popen");
-
-        while((c = getc(pipe_fp)) != EOF)
-            putc(c, sock_fpo);
-        pclose(pipe_fp);
+     
+        int pfd[2],pid;
+        if(pipe(pfd) == -1)
+            oops("pipe");
+        if((pid = fork()) == -1)
+            oops("fork");
+        if(pid > 0){
+            close(pfd[1]);
+            pipe_fp = fdopen(pfd[0], "r");
+            while((c = getc(pipe_fp)) != EOF)
+                putc(c, sock_fpo);
+        }
+        else{
+            close(pfd[0]);
+            dup2(pfd[1],1);
+            close(pfd[1]);
+            execlp("ls","ls",dirname,NULL);
+            oops("execlp");
+        }
         fclose(sock_fpo);
         fclose(sock_fpi);
     }
