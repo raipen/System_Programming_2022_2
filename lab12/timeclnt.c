@@ -33,11 +33,9 @@ int main(int ac, char *av[])
     bcopy(hp->h_addr, (struct sockaddr *)&servadd.sin_addr, hp->h_length);
     servadd.sin_port = htons(atoi(av[2])); // fill in port number
     servadd.sin_family = AF_INET; // fill in socket type
-    printf("a\n");
     if (connect(sock_id, (struct sockaddr *)&servadd, sizeof(servadd)) != 0)
         oops("connect");
 
-    printf("b\n");
     // step 3: transfer data from server, then hangup
     messlen = read(sock_id, message, BUFSIZ); // read from socket
     if (messlen == -1)
